@@ -25,7 +25,15 @@ namespace Usuários.Controllers
             HttpContext.Session.SetString("UsuarioLogado", pessoasDoBanco[0].Id.ToString());
 
             //criar cookie com email
-            Response.Cookies.Append("UsuarioLogado", pessoasDoBanco[0].Id.ToString());
+            Response.Cookies.Append("UsuarioLogado", pessoasDoBanco[0].Id.ToString(),
+                new CookieOptions
+                {
+                    Expires = DateTime.Now.AddMinutes(30),
+                    Secure = true,
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.None
+
+                });
             
 
             return Ok(new { mensagem = "Login realizado com sucesso" });
